@@ -23,8 +23,8 @@ class PhysicsEngine {
   ///////////////////////////////////////////////////////////////////////////////////////
   update(linkArray, pointArray) {
     // let now             = Date.now();
-    computeForce(linkArray, this.k, this.z)
-    updatePoints(pointArray, this.h /* * (now - this.lastTimeMillis) */);
+    // computeForce(linkArray, this.k, this.z)
+    // updatePoints(pointArray, this.h /* * (now - this.lastTimeMillis) */);
     // this.lastTimeMillis = now;
   }
 

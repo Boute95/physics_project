@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const NORMAL_MATERIAL = new THREE.MeshNormalMaterial();
 const LINE_MATERIAL   = new THREE.LineBasicMaterial();
-const SPHERE_GEOMETRY = new THREE.SphereGeometry(0.05, 32, 32);
+const SPHERE_GEOMETRY = new THREE.SphereGeometry(0.01, 4, 4);
 
 class RenderEngine {
 
@@ -41,6 +41,7 @@ class RenderEngine {
     let pointMesh                 = new THREE.Mesh(SPHERE_GEOMETRY, NORMAL_MATERIAL);
     this.pointMeshArray[point.id] = pointMesh;
     pointMesh.position.setX(point.x);
+    pointMesh.position.setY(point.y);
     this.scene.add(pointMesh);
   }
 
@@ -61,11 +62,17 @@ class RenderEngine {
   ///////////////////////////////////////////////////////////////////////////////////////
   updateMeshes(pointArray, linkArray) {
     for (let i = 0; i < this.pointMeshArray.length; ++i) {
+      this.pointMeshArray[i].position.setX(pointArray[i].x);
       this.pointMeshArray[i].position.setY(pointArray[i].y);
+      // this.pointMeshArray[i].position.setZ(pointArray[i].z);
     }
     for (let i = 0; i < this.linkLineArray.length; ++i) {
+      // this.linkLineArray[i].geometry.attributes.position.setX(0, linkArray[i].p1.x);
       this.linkLineArray[i].geometry.attributes.position.setY(0, linkArray[i].p1.y);
+      // this.linkLineArray[i].geometry.attributes.position.setZ(0, linkArray[i].p1.z);
+      // this.linkLineArray[i].geometry.attributes.position.setX(1, linkArray[i].p2.x);
       this.linkLineArray[i].geometry.attributes.position.setY(1, linkArray[i].p2.y);
+      // this.linkLineArray[i].geometry.attributes.position.setZ(1, linkArray[i].p2.z);
       this.linkLineArray[i].geometry.attributes.position.needsUpdate = true;
     }
   }

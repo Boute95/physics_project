@@ -11,8 +11,8 @@ import {Point} from './Point.js';
 ///////////////////////////////////////////////////////////////////////////////
 
 const gui      = new GUI();
-const flagXDim = 10;
-const flagYDim = 10;
+const flagXDim = 20;
+const flagYDim = 20;
 const flagRect = {
   top : -1,
   left : -1,
@@ -31,8 +31,4 @@ for (const link of flag.linkArray) {
   engine.addLink(link);
 }
 
-let engineStartInfo = {
-  initialVelocityFirstPoint : 3,
-  initialVelocityLastPoint : -3
-};
-engine.start(engineStartInfo);
+engine.start();

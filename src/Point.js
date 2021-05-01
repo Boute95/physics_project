@@ -1,14 +1,16 @@
 class Point {
 
   ///////////////////////////////////////////////////////////////////////////////////////
-  constructor(id, position) {
-    this.id        = id;
-    this.x         = position.x;
-    this.y         = position.y;
-    this.z         = 0;
-    this.velocity  = 0;
-    this.forceBuff = 0;
-    this.mass      = 1;
+  constructor(id, position, distanceFromRoot, isFixed) {
+    this.id               = id;
+    this.x                = position.x;
+    this.y                = position.y;
+    this.z                = 0;
+    this.distanceFromRoot = distanceFromRoot;
+    this.isFixed          = isFixed;
+    this.velocity         = {x : 0, y : 0, z : 0};
+    this.forceBuff        = {x : 0, y : 0, z : 0};
+    this.mass             = 1;
   }
 }
 

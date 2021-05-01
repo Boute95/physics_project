@@ -1,21 +1,23 @@
 import * as Stats from 'stats.js';
 import * as THREE from 'three';
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+
+import {createFlag, Flag} from './Flag.js';
 import {PhysicsEngine} from './PhysicsEngine.js';
 import {RenderEngine} from './RenderEngine.js';
-import {Flag, createFlag} from './Flag.js';
 
 
 class Engine {
 
   ///////////////////////////////////////////////////////////////////////////////////////
   constructor(gui) {
-    this.pointArray = [];
-    this.linkArray  = [];
-    const pointCount = 6;
-    this.startInfo     = null;
-    this.physicsEngine = new PhysicsEngine(gui);
-    this.renderEngine  = new RenderEngine();
+    this.pointArray           = [];
+    this.initialPositionArray = [];
+    this.linkArray            = [];
+    const pointCount          = 6;
+    this.startInfo            = null;
+    this.physicsEngine        = new PhysicsEngine(gui);
+    this.renderEngine         = new RenderEngine();
     gui.add(this, 'reset');
 
     // Controls
@@ -35,7 +37,12 @@ class Engine {
 
   ///////////////////////////////////////////////////////////////////////////////////////
   addPoint(point) {
-    this.pointArray[point.id] = point;
+    this.pointArray[point.id]           = point;
+    this.initialPositionArray[point.id] = {
+      x : point.x,
+      y : point.y,
+      z : point.z
+    };
     this.renderEngine.addPoint(point);
   }
 
@@ -59,24 +66,14 @@ class Engine {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////
-  start(startInfo) {
-    this.pointArray[0].velocity = startInfo.initialVelocityFirstPoint;
-    this.pointArray[this.pointArray.length - 1].velocity =
-        startInfo.initialVelocityLastPoint;
-    this.startInfo = startInfo;
-    this.renderEngine.setLoop(this.loop.bind(this));
-  }
+  start() { this.renderEngine.setLoop(this.loop.bind(this)); }
 
 
   ///////////////////////////////////////////////////////////////////////////////////////
   reset() {
     this.renderEngine.setLoop(null);
-    this.physicsEngine.reset(this.linkArray, this.pointArray);
-    if (this.startInfo) {
-      this.pointArray[0].velocity = this.startInfo.initialVelocityFirstPoint;
-      this.pointArray[this.pointArray.length - 1].velocity =
-          this.startInfo.initialVelocityLastPoint;
-    }
+    this.physicsEngine.reset(this.linkArray, this.pointArray,
+                             this.initialPositionArray);
     this.renderEngine.setLoop(this.loop.bind(this));
   }
 }
